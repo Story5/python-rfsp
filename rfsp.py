@@ -1,4 +1,5 @@
 import requests
+import os
 import csv
 import time
 
@@ -26,11 +27,13 @@ def getCSVRow(fieldnames, spot):
     return dic
 
 
-def writeCSV(filename, spot_list):
-    with open(filename, 'a') as csvfile:
+def writeCSV(csv_name, spot_list):
+    exist = os.path.exists(csv_name)
+    with open(csv_name, 'a') as csvfile:
         fieldnames = getCSVHeader()
         csv_writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        csv_writer.writeheader()
+        if not exist:
+            csv_writer.writeheader()
         for spot in spot_list:
             dic = getCSVRow(fieldnames, spot)
             csv_writer.writerow(dic)
@@ -43,9 +46,11 @@ def requestAndCSV():
 
 
 def main():
+    sleep_input = input("输入多少秒获取一次数据(s),如一分钟输入60:")
+    sleep_time = int(sleep_input)
     while True:
         requestAndCSV()
-        time.sleep(60)
+        time.sleep(sleep_time)
 
 
 main()
