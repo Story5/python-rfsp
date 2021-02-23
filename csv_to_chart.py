@@ -20,10 +20,12 @@ def _print_dev(dev):
 def read_csv(csv_name):
     spots_dic = {}
     if os.path.exists(csv_name):
-        with open(csv_name, 'r') as csv_file:
+        with open(csv_name, 'r',encoding='gbk') as csv_file:
             csv_reader = csv.reader(csv_file)
             header_row = next(csv_reader)
             for row in csv_reader:
+                if len(row) == 0:
+                    continue
                 spot = {
                     'name': row[0],
                     'grade': row[1],

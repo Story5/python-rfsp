@@ -41,7 +41,6 @@ def writeCSV(csv_name, spot_list):
 
 def requestAndCSV():
     spotList = get_spots_data()
-    print(spotList)
     writeCSV('spot.csv', spotList)
 
 
